@@ -3,29 +3,119 @@ var vrView;
 var scenes = {
 	B5: {
 		image: 'img/B5.jpg',
+		//preview: 'img/green.jpg',
 		is_stereo: false,
 		hotspots: {
-      B4: {
-        pitch: 0,
-        yaw: 110,
-        radius: 0.05,
-        distance: 1
-      }    
-    }
-},
+			B4: {
+				pitch: 0,
+				yaw: -120,
+				radius: 0.05,
+				distance: 1
+			}    
+		}
+	},
 	B4: {
-			image: 'img/B4.jpg',
-			is_stereo: false,
-			hotspots: {
-	      B5: {
-	        pitch: 0,
-	        yaw: 110,
-	        radius: 0.05,
-	        distance: 1
-	      }    
-	    }
-	}
-
+		image: 'img/B4.jpg',
+		is_stereo: false,
+		hotspots: {
+			B5: {
+				pitch: 0,
+				yaw: 110,
+				radius: 0.05,
+				distance: 1
+			},
+			B6: {
+				pitch: 0,
+				yaw: 170,
+				radius: 0.05,
+				distance: 1
+			},
+			B2: {
+				pitch: 0,
+				yaw: 90,
+				radius: 0.05,
+				distance: 1
+			}        
+		}
+	},
+	B6: {
+		image: 'img/B6.jpg',
+		is_stereo: false,
+		hotspots: {
+			B4: {
+				pitch: 0,
+				yaw: 110,
+				radius: 0.05,
+				distance: 1
+			}	       
+		}
+	},
+	B2: {
+		image: 'img/B2.jpg',
+		is_stereo: false,
+		hotspots: {
+			B4: {
+				pitch: 0,
+				yaw: 110,
+				radius: 0.05,
+				distance: 1
+			},
+			B1C4: {
+				pitch: 0,
+				yaw: 170,
+				radius: 0.05,
+				distance: 1
+			}       
+		}
+	},
+	B1C4: {
+		image: 'img/B1C4.jpg',
+		is_stereo: false,
+		hotspots: {
+			B2: {
+				pitch: 0,
+				yaw: 110,
+				radius: 0.05,
+				distance: 1
+			},
+			C4A3: {
+				pitch: 0,
+				yaw: 170,
+				radius: 0.05,
+				distance: 1
+			}    
+		}
+	},
+	C4A3: {
+		image: 'img/C4A3.jpg',
+		is_stereo: false,
+		hotspots: {
+			B1C4: {
+				pitch: 0,
+				yaw: 110,
+				radius: 0.05,
+				distance: 1
+			},
+			U1: {
+				pitch: 0,
+				yaw: 170,
+				radius: 0.05,
+				distance: 1
+			}    
+		}
+	},
+	U1: {
+		image: 'img/U1.jpg',
+		is_stereo: false,
+		hotspots: {
+			C4A3: {
+				pitch: 0,
+				yaw: 110,
+				radius: 0.05,
+				distance: 1
+			} 
+		}
+	},
 	}
 	
 window.addEventListener('load', onVrViewLoad)
@@ -35,15 +125,16 @@ function onVrViewLoad() {
   	width: '100%',
     height: 480,
     image: 'img/B5.jpg',
-    is_stereo: true  
+    is_stereo: false,
+    is_debug: true
   });
 
 
   vrView.on('ready', onVRViewReady);
   vrView.on('modechange', onModeChange);
   vrView.on('click', onHotspotClick);
-  vrView.on('getposition', onGetPosition);
   vrView.on('error', onVRViewError);
+  vrView.on('getposition', onGetPosition);
 }
 
 function loadScene(id) {
@@ -53,7 +144,6 @@ function loadScene(id) {
     image: scenes[id].image,
     preview: scenes[id].preview
   });
-
   // Add all the hotspots for the scene
   var newScene = scenes[id];
   var sceneHotspots = Object.keys(newScene.hotspots);
@@ -72,7 +162,7 @@ function loadScene(id) {
 }
 
 function onHotspotClick(e) {
-  vrView.getPosition()
+ vrView.getPosition();
   console.log('onHotspotClick', e.id);
   if (e.id) {
     loadScene(e.id);
@@ -93,5 +183,5 @@ function onVRViewError(e) {
 }
 
 function onGetPosition(e) {
-    console.log(e)
+    console.log('onGetPosition', e)
 }
